@@ -24,76 +24,87 @@
         android:padding="8dp"
         android:layout_gravity="top">
 
-        <!-- 안과 버튼 -->
         <Button
             android:id="@+id/btn_eye_clinic"
+            android:background="@drawable/button_background"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:text="안과" />
 
-        <!-- 피부과 버튼 -->
         <Button
+            android:background="@drawable/button_background"
             android:id="@+id/btn_dermatology"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textSize="15sp"
             android:layout_weight="1"
             android:text="피부과" />
 
         <!-- 치과 버튼 -->
         <Button
             android:id="@+id/btn_dentist"
+            android:background="@drawable/button_background"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textSize="15sp"
             android:layout_weight="1"
             android:text="치과" />
+
     </LinearLayout>
 
     <!-- Bottom Sheet Layout을 포함 -->
-    <LinearLayout
-        android:id="@+id/bottom_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="#FFFFFF"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/bottom_sheet"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="16dp"-->
+<!--        android:background="#FFFFFF"-->
+<!--        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
 
-        <TextView
-            android:id="@+id/hospital_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="병원 이름"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/hospital_name"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="병원 이름"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/hospital_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="병원 주소"
-            android:layout_marginTop="8dp" />
+<!--        <TextView-->
+<!--            android:id="@+id/hospital_address"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="병원 주소"-->
+<!--            android:layout_marginTop="8dp" />-->
 
-        <TextView
-            android:id="@+id/hospital_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="병원 전화번호"
-            android:layout_marginTop="8dp" />
+<!--        <TextView-->
+<!--            android:id="@+id/hospital_phone"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="병원 전화번호"-->
+<!--            android:layout_marginTop="8dp" />-->
 
-        <TextView
-            android:id="@+id/hospital_hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="병원 영업시간"
-            android:layout_marginTop="8dp" />
-    </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/hospital_hours"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="카테고리"-->
+<!--            android:layout_marginTop="8dp" />-->
+<!--    </LinearLayout>-->
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="center"
         android:layout_margin="16dp">
 
         <!-- 줌 인 버튼 -->
@@ -110,5 +121,37 @@
             android:layout_height="wrap_content"
             android:text="-" />
     </LinearLayout>
+
+    <!-- Bottom Sheet Layout을 포함하는 LinearLayout -->
+    <LinearLayout
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_peekHeight="300dp">
+
+        <!-- Drag Handle -->
+        <View
+            android:id="@+id/drag_handle"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:background="#CCCCCC"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:rotation="72" />
+
+        <!-- ListView at the bottom -->
+        <ListView
+            android:id="@+id/listView_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"/>
+    </LinearLayout>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

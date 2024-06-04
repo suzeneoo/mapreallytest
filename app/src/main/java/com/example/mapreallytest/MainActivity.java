@@ -1,12 +1,15 @@
 package com.example.mapreallytest;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.mapreallytest.Eyes;
+import com.example.mapreallytest.HospitalAdapter;
+import com.example.mapreallytest.R;
+import com.example.mapreallytest.common.HospitalInfoActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -34,6 +41,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private BottomSheetBehavior<View> bottomSheetBehavior;
     private TextView hospitalName, hospitalAddress, hospitalPhone, hospitalHours;
     private Map<Marker, Eyes> markerEyesMap = new HashMap<>();
+    private List<Eyes> hospitalList = new ArrayList<>();
+    private HospitalAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +71,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Button btnEyeClinic = findViewById(R.id.btn_eye_clinic);
         Button btnDermatology = findViewById(R.id.btn_dermatology);
         Button btnDentist = findViewById(R.id.btn_dentist);
+
+        View bottomSheet = findViewById(R.id.bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    bottomSheetBehavior.setPeekHeight(200);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // 슬라이드될 때 처리할 내용
+            }
+        });
 
         zoomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,21 +112,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnEyeClinic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadMarkersFromJson(R.raw.eyes);
+                toggleBottomSheet();
+                loadMarkersFromJson(R.raw.eyes, BitmapDescriptorFactory.HUE_RED);
+                loadHospitalNamesFromJson(R.raw.eyes);
             }
         });
 
         btnDermatology.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadMarkersFromJson(R.raw.skin);
+                toggleBottomSheet();
+                loadMarkersFromJson(R.raw.skin, BitmapDescriptorFactory.HUE_GREEN);
+                loadHospitalNamesFromJson(R.raw.skin);
             }
         });
 
         btnDentist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadMarkersFromJson(R.raw.teeth);
+                toggleBottomSheet();
+                loadMarkersFromJson(R.raw.teeth, BitmapDescriptorFactory.HUE_ORANGE);
+                loadHospitalNamesFromJson(R.raw.teeth);
             }
         });
 
@@ -106,15 +141,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-
-        View bottomSheet = findViewById(R.id.bottom_sheet);
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
-        hospitalName = findViewById(R.id.hospital_name);
-        hospitalAddress = findViewById(R.id.hospital_address);
-        hospitalPhone = findViewById(R.id.hospital_phone);
-        hospitalHours = findViewById(R.id.hospital_hours);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = LocationRequest.create();
@@ -134,6 +160,72 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         };
+
+        setupDragHandle();
+
+        setupListView();
+    }
+
+    private void setupDragHandle() {
+        View dragHandle = findViewById(R.id.drag_handle);
+        dragHandle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+    }
+
+    private void toggleBottomSheet() {
+        if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.setPeekHeight(200);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
+    }
+
+    private void setupListView() {
+        ListView listView = findViewById(R.id.listView_list);
+        listAdapter = new HospitalAdapter(this, new ArrayList<>());  // HospitalAdapter 사용
+        listView.setAdapter(listAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Eyes selectedHospital = (Eyes) listAdapter.getItem(position);
+                Intent intent = new Intent(MainActivity.this, HospitalInfoActivity.class);
+                intent.putExtra("hospital_name", selectedHospital.get이름());
+                intent.putExtra("hospital_address", selectedHospital.get도로명주소());
+                intent.putExtra("hospital_phone", selectedHospital.get일반전화());
+                intent.putExtra("hospital_category", selectedHospital.get카테고리());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void loadHospitalNamesFromJson(int jsonResourceId) {
+        try {
+            InputStream inputStream = getResources().openRawResource(jsonResourceId);
+            String json = new java.util.Scanner(inputStream).useDelimiter("\\A").next();
+
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Eyes>>() {}.getType();
+            List<Eyes> clinics = gson.fromJson(json, listType);
+
+            hospitalList.clear(); // 병원 리스트 초기화
+            hospitalList.addAll(clinics); // 병원 리스트 업데이트
+
+            listAdapter.clear(); // 어댑터 데이터 초기화
+            listAdapter.addAll(hospitalList); // 어댑터에 데이터 추가
+            listAdapter.notifyDataSetChanged(); // 어댑터 갱신
+        } catch (Exception e) {
+            Log.e(TAG, "Error reading JSON file", e);
+        }
     }
 
     @Override
@@ -151,10 +243,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onMarkerClick(Marker marker) {
                 Eyes eyeClinic = markerEyesMap.get(marker);
                 if (eyeClinic != null) {
+                    hospitalName = findViewById(R.id.hospital_name);
+                    hospitalAddress = findViewById(R.id.hospital_address);
+                    hospitalPhone = findViewById(R.id.hospital_phone);
+                    hospitalHours = findViewById(R.id.hospital_hours);
+
+                    hospitalName.setText(eyeClinic.get이름());
                     hospitalName.setText(eyeClinic.get이름());
                     hospitalAddress.setText(eyeClinic.get도로명주소());
                     hospitalPhone.setText(eyeClinic.get일반전화());
-                    hospitalHours.setText(eyeClinic.get영업시간());
+                    hospitalHours.setText(eyeClinic.get카테고리());
 
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
@@ -225,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void loadMarkersFromJson(int jsonResourceId) {
+    private void loadMarkersFromJson(int jsonResourceId, float color) {
         mMap.clear(); // 기존 마커 제거
         markerEyesMap.clear();
 
@@ -243,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .position(location)
                         .title(clinic.get이름())
                         .snippet(clinic.get도로명주소())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        .icon(BitmapDescriptorFactory.defaultMarker(color)));
                 markerEyesMap.put(marker, clinic); // Marker와 병원 정보를 매핑
                 Log.d(TAG, "Marker added: " + clinic.get이름() + " at " + location.toString());
             }
