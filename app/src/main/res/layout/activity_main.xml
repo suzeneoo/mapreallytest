@@ -19,28 +19,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:background="@drawable/rounded_background"
         android:elevation="4dp"
         android:padding="8dp"
         android:layout_gravity="top">
 
         <Button
             android:id="@+id/btn_eye_clinic"
-            android:background="@drawable/button_background"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:text="안과"
+            android:textColor="#000000"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="안과" />
+            android:textStyle="bold" />
 
         <Button
-            android:background="@drawable/button_background"
+            android:background="#FFFFFF"
             android:id="@+id/btn_dermatology"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
+            android:textColor="#000000"
             android:textSize="15sp"
             android:layout_weight="1"
             android:text="피부과" />
@@ -48,10 +50,11 @@
         <!-- 치과 버튼 -->
         <Button
             android:id="@+id/btn_dentist"
-            android:background="@drawable/button_background"
+            android:background="#FFFFFF"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
+            android:textColor="#000000"
             android:textSize="15sp"
             android:layout_weight="1"
             android:text="치과" />
@@ -59,53 +62,56 @@
     </LinearLayout>
 
     <!-- Bottom Sheet Layout을 포함 -->
-<!--    <LinearLayout-->
-<!--        android:id="@+id/bottom_sheet"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="16dp"-->
-<!--        android:background="#FFFFFF"-->
-<!--        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/bottom_sheet"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:padding="16dp"-->
+    <!--        android:background="#FFFFFF"-->
+    <!--        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/hospital_name"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="병원 이름"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/hospital_name"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="병원 이름"-->
+    <!--            android:textSize="18sp"-->
+    <!--            android:textStyle="bold" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/hospital_address"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="병원 주소"-->
-<!--            android:layout_marginTop="8dp" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/hospital_address"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="병원 주소"-->
+    <!--            android:layout_marginTop="8dp" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/hospital_phone"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="병원 전화번호"-->
-<!--            android:layout_marginTop="8dp" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/hospital_phone"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="병원 전화번호"-->
+    <!--            android:layout_marginTop="8dp" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/hospital_hours"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="카테고리"-->
-<!--            android:layout_marginTop="8dp" />-->
-<!--    </LinearLayout>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/hospital_hours"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="카테고리"-->
+    <!--            android:layout_marginTop="8dp" />-->
+    <!--    </LinearLayout>-->
 
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_margin="16dp">
+        android:layout_gravity="end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="80dp"
+        android:padding="8dp">
 
         <!-- 줌 인 버튼 -->
         <Button
@@ -137,7 +143,7 @@
             android:id="@+id/drag_handle"
             android:layout_width="match_parent"
             android:layout_height="23dp"
-            android:background="#CCCCCC"
+            android:background="@drawable/rounded_background"
             android:cursorVisible="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -149,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#FFFFFF"/>
+            android:background="@drawable/rounded_background"/>
     </LinearLayout>
 
 

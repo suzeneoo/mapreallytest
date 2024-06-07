@@ -8,7 +8,8 @@ public class Eyes {
     private String 일반전화;
     private String 영업시간;
     private String 썸네일이미지URL;
-    private int 방문자_리뷰수;
+
+    private String 방문자_리뷰수;
     private int 블로그_리뷰수;
     private int 총_리뷰수;
     private double 위도;
@@ -17,6 +18,8 @@ public class Eyes {
     private String 홈페이지URL;
     private int 사진리뷰수;
     private String 상세페이지URL;
+
+    private boolean isFromJhospitals;
 
     // Getters and Setters
     public String get이름() {
@@ -76,10 +79,15 @@ public class Eyes {
     }
 
     public int get방문자_리뷰수() {
-        return 방문자_리뷰수;
+        // 문자열을 정수로 변환
+        try {
+            return Integer.parseInt(방문자_리뷰수);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
-    public void set방문자_리뷰수(int 방문자_리뷰수) {
+    public void set방문자_리뷰수(String 방문자_리뷰수) {
         this.방문자_리뷰수 = 방문자_리뷰수;
     }
 
@@ -146,4 +154,13 @@ public class Eyes {
     public void set상세페이지URL(String 상세페이지URL) {
         this.상세페이지URL = 상세페이지URL;
     }
+
+    public boolean isFromJhospitals() {
+        return isFromJhospitals;
+    }
+
+    public void setFromJhospitals(boolean fromJhospitals) {
+        isFromJhospitals = fromJhospitals;
+    }
+
 }
