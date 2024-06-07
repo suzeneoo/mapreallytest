@@ -203,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("hospital_address", selectedHospital.get도로명주소());
                 intent.putExtra("hospital_phone", selectedHospital.get일반전화());
                 intent.putExtra("hospital_category", selectedHospital.get카테고리());
+                intent.putExtra("hospital_image_url", selectedHospital.get썸네일이미지URL());
                 startActivity(intent);
             }
         });
@@ -374,4 +375,3 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         getDeviceLocation();
     }
 }
-
