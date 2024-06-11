@@ -24,7 +24,7 @@ public class HospitalInfoActivity extends AppCompatActivity {
         TextView phoneTextView = findViewById(R.id.hospital_phone);
         TextView categoryTextView = findViewById(R.id.hospital_hours);
         ImageView partnershipImageView = findViewById(R.id.partnership_image);
-        Button backButton = findViewById(R.id.back_button);
+
 
 
         Intent intent = getIntent();
@@ -44,12 +44,6 @@ public class HospitalInfoActivity extends AppCompatActivity {
                 .load(imageUrl)
                 .into(partnershipImageView);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // MainActivity로 돌아가기
-                finish();
-            }
-        });
+       
     }
 }

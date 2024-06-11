@@ -31,6 +31,8 @@
         </activity>
 
         <activity android:name=".common.HospitalInfoActivity" />
+
+        <activity android:name=".common.JhospitalInfoActivity" />
     </application>
 
 </manifest>

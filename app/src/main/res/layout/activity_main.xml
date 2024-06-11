@@ -7,13 +7,14 @@
     tools:context=".MainActivity">
 
     <!-- Google Map Fragment를 화면에 표시 -->
+
+    <!-- 버튼들을 포함하는 LinearLayout을 화면 상단에 위치시킴 -->
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- 버튼들을 포함하는 LinearLayout을 화면 상단에 위치시킴 -->
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
@@ -34,7 +35,8 @@
             android:text="안과"
             android:textColor="#000000"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:tag="eye_clinic"/>
 
         <Button
             android:background="#FFFFFF"
@@ -45,9 +47,9 @@
             android:textColor="#000000"
             android:textSize="15sp"
             android:layout_weight="1"
-            android:text="피부과" />
+            android:text="피부과"
+            android:tag="dermatology"/>
 
-        <!-- 치과 버튼 -->
         <Button
             android:id="@+id/btn_dentist"
             android:background="#FFFFFF"
@@ -57,9 +59,22 @@
             android:textColor="#000000"
             android:textSize="15sp"
             android:layout_weight="1"
-            android:text="치과" />
+            android:text="치과"
+            android:tag="dentist"/>
+
+        <Button
+            android:id="@+id/btn_distance"
+            android:background="#FFFFFF"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:text="내주변"/>
 
     </LinearLayout>
+
 
     <!-- Bottom Sheet Layout을 포함 -->
     <!--    <LinearLayout-->
@@ -155,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_background"/>
+            android:background="@drawable/rounded_background" />
     </LinearLayout>
 
 
