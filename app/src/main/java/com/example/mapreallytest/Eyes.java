@@ -9,6 +9,8 @@ public class Eyes {
     private String 영업시간;
     private String 썸네일이미지URL;
 
+    private float distance;
+
     private String 주소;
     private String 방문자_리뷰수;
     private int 블로그_리뷰수;
@@ -191,6 +193,14 @@ public class Eyes {
 
     public String get주소(){
         return 주소;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
 

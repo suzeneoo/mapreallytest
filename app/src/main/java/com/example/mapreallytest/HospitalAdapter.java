@@ -1,6 +1,7 @@
 package com.example.mapreallytest;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import java.util.List;
 public class HospitalAdapter extends BaseAdapter {
     private Context context;
     private List<Eyes> hospitals;
+    private boolean distanceMode = false;
 
     public HospitalAdapter(Context context, List<Eyes> hospitals) {
         this.context = context;
@@ -50,11 +52,19 @@ public class HospitalAdapter extends BaseAdapter {
             hospitalType.setText("제휴병원");
         } else {
             hospitalType.setText("일반병원");
+            hospitalType.setTextColor(Color.BLACK);
         }
 
         hospitalName.setText(hospital.get이름());
         hospitalCategory.setText(hospital.get카테고리());
-        hospitalReview.setText("리뷰 수: " + hospital.get방문자_리뷰수());
+
+        if (distanceMode) {
+            hospitalReview.setText(String.format("%.2f km", hospital.getDistance() / 1000)); // 거리 표시
+        } else {
+            hospitalReview.setText("리뷰 수: " + (hospital.get방문자_리뷰수() != null ? hospital.get방문자_리뷰수() : "0"));
+        }
+
+
 
         return convertView;
     }
@@ -62,6 +72,11 @@ public class HospitalAdapter extends BaseAdapter {
     public void updateHospitals(List<Eyes> newHospitals) {
         hospitals.clear();
         hospitals.addAll(newHospitals);
+        notifyDataSetChanged();
+    }
+
+    public void setDistanceMode(boolean distanceMode) {
+        this.distanceMode = distanceMode;
         notifyDataSetChanged();
     }
 }

@@ -87,13 +87,14 @@
         />
 
     <!-- 하단 중앙 버튼 추가 -->
-    <Button
+    <android.widget.Button
         android:id="@+id/bottom_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="예약페이지로 이동"
-        android:textColor="@color/black"
-        android:background="@drawable/rounded_border"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

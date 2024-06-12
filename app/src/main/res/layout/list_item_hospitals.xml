@@ -50,6 +50,7 @@
         android:layout_marginTop="4dp"
         android:text="리뷰 수" />
 
+
     <!-- 아래쪽에 구분선 추가 -->
     <View
         android:layout_width="match_parent"
