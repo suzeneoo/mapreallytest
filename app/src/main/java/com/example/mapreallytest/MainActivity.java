@@ -6,10 +6,13 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,16 +68,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String currentCategory = ""; // 현재 선택된 카테고리 저장
 
 
+    private int getSelectedMenu(@NonNull MenuItem item) {
+        int result = 0;
+
+        if (item.getItemId() == R.id.btn_eye_clinic)
+            result = 1;
+        if (item.getItemId() == R.id.btn_dermatology)
+            result = 2;
+        if (item.getItemId() == R.id.btn_dentist)
+            result = 3;
+
+        return result;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageView ivOption = findViewById(R.id.iv_option);
+
         Button zoomInButton = findViewById(R.id.zoom_in_button);
         Button zoomOutButton = findViewById(R.id.zoom_out_button);
-        Button btnEyeClinic = findViewById(R.id.btn_eye_clinic);
-        Button btnDermatology = findViewById(R.id.btn_dermatology);
-        Button btnDentist = findViewById(R.id.btn_dentist);
         Button btnDistance = findViewById(R.id.btn_distance);
         Button btnDistance2 = findViewById(R.id.btn_distance2);
 
@@ -115,32 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        btnEyeClinic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentCategory = "eye_clinic";
-                toggleBottomSheet();
-                loadMarkersAndHospitals(R.raw.eyes, BitmapDescriptorFactory.HUE_BLUE);
-            }
-        });
 
-        btnDermatology.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentCategory = "dermatology";
-                toggleBottomSheet();
-                loadMarkersAndHospitals(R.raw.skin, BitmapDescriptorFactory.HUE_ROSE);
-            }
-        });
-
-        btnDentist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentCategory = "dentist";
-                toggleBottomSheet();
-                loadMarkersAndHospitals(R.raw.teeth, BitmapDescriptorFactory.HUE_ORANGE);
-            }
-        });
 
         btnDistance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +153,47 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
 
+        });
+
+        ivOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(MainActivity.this, v); // v는 클릭된 뷰를 의미
+                // 메뉴 인플레이터를 사용하여 팝업 메뉴에 메뉴 리소스를 추가
+                popupMenu.getMenuInflater().inflate(R.menu.option_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (getSelectedMenu(item)) {
+                            case 1:
+                                // 안과
+                                currentCategory = "eye_clinic";
+                                toggleBottomSheet();
+                                loadMarkersAndHospitals(R.raw.eyes, BitmapDescriptorFactory.HUE_BLUE);
+                                break;
+                            case 2:
+                                // 피부과
+                                currentCategory = "dermatology";
+                                toggleBottomSheet();
+                                loadMarkersAndHospitals(R.raw.skin, BitmapDescriptorFactory.HUE_ROSE);
+                                break;
+                            case 3:
+                                // 치과
+                                currentCategory = "dentist";
+                                toggleBottomSheet();
+                                loadMarkersAndHospitals(R.raw.teeth, BitmapDescriptorFactory.HUE_ORANGE);
+                                break;
+                            default:
+                                Toast.makeText(getApplication(), "선택하지 않음", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+                popupMenu.show();
+            }
         });
 
         btnDistance2.setOnClickListener(new View.OnClickListener() {
@@ -528,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Eyes eyeClinic = markerEyesMap.get(marker);
                     if (eyeClinic != null) {
                         hospitalName = findViewById(R.id.hospital_name);
-//                        hospitalAddress = findViewById(R.id.hospital_address);
+   //                     hospitalAddress = findViewById(R.id.hospital_address);
                         hospitalPhone = findViewById(R.id.hospital_phone);
                         hospitalHours = findViewById(R.id.hospital_hours);
                         hospitalCategory = findViewById(R.id.hospital_category);

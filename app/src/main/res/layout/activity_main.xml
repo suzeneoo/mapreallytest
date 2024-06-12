@@ -20,70 +20,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/rounded_background"
         android:elevation="4dp"
         android:padding="8dp"
         android:layout_gravity="top">
 
-        <Button
-            android:id="@+id/btn_eye_clinic"
+        <android.widget.Button
+            android:id="@+id/btn_distance2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:layout_weight="1"
-            android:background="#FFFFFF"
-            android:text="안과"
+            android:text="거리순"
             android:textColor="#000000"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:tag="eye_clinic"/>
+            />
 
-        <Button
-            android:background="#FFFFFF"
-            android:id="@+id/btn_dermatology"
+        <android.widget.Button
+
+            android:id="@+id/btn_recommend"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:textColor="#000000"
             android:textSize="15sp"
             android:layout_weight="1"
-            android:text="피부과"
-            android:tag="dermatology"/>
+            android:text="추천순" />
 
-        <Button
-            android:id="@+id/btn_dentist"
-            android:background="#FFFFFF"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:layout_weight="1"
-            android:text="치과"
-            android:tag="dentist"/>
-
-        <Button
+        <!-- 치과 버튼 -->
+        <android.widget.Button
             android:id="@+id/btn_distance"
-            android:background="#FFFFFF"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:textColor="#000000"
             android:textSize="15sp"
             android:layout_weight="1"
-            android:text="내주변"/>
+            android:text="내주변" />
 
-        <Button
-            android:id="@+id/btn_distance2"
-            android:background="#FFFFFF"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/iv_option"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_margin="4dp"
             android:textColor="#000000"
-            android:textSize="15sp"
-            android:layout_weight="1"
-            android:text="거리순"/>
-
+            />
 
 
     </LinearLayout>
